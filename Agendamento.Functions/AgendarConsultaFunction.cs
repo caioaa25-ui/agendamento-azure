@@ -15,7 +15,7 @@ public sealed class AgendarConsultaFunction(AgendarConsultaUseCase useCase)
         [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "consultas")] HttpRequestData req,
         CancellationToken cancellationToken)
     {
-        var corpo = await JsonSerializer.DeserializeAsync<Requisicao>(req.Body, cancellationToken: cancellationToken);
+        var corpo = await JsonSerializer.DeserializeAsync<Requisicao>(req.Body, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }, cancellationToken);
         if (corpo is null)
             return await Resposta(req, HttpStatusCode.BadRequest, new { erro = "Corpo inválido." });
 
@@ -41,3 +41,5 @@ public sealed class AgendarConsultaFunction(AgendarConsultaUseCase useCase)
         return resposta;
     }
 }
+
+
