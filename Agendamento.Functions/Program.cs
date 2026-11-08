@@ -1,20 +1,12 @@
-using Azure.Monitor.OpenTelemetry.Exporter;
-using Microsoft.Azure.Functions.Worker;
+﻿using Agendamento.Application.Abstractions;
+using Agendamento.Application.UseCases;
+using Agendamento.Infrastructure.Persistence;
 using Microsoft.Azure.Functions.Worker.Builder;
-using Microsoft.Azure.Functions.Worker.OpenTelemetry;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OpenTelemetry;
 
 var builder = FunctionsApplication.CreateBuilder(args);
-
 builder.ConfigureFunctionsWebApplication();
-
-if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING")))
-{
-    builder.Services.AddOpenTelemetry()
-        .UseFunctionsWorkerDefaults()
-        .UseAzureMonitorExporter();
-}
-
+builder.Services.AddSingleton<IConsultaRepository, ConsultaRepositoryEmMemoria>();
+builder.Services.AddScoped<AgendarConsultaUseCase>();
 builder.Build().Run();
