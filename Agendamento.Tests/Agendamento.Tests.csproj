@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Agendamento.Application\Agendamento.Application.csproj" />
     <ProjectReference Include="..\Agendamento.Domain\Agendamento.Domain.csproj" />
+    <ProjectReference Include="..\Agendamento.Infrastructure\Agendamento.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
